@@ -34,6 +34,7 @@ export const Login = () => {
         },
         onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
             dispatch(authThunks.login(values))
+                // положительный ответ не обрабатываем так как нужна ошибка
                 // для обработки в форме ошибок: .unwrap() - в компоненте на UI отловили ошибку что в форме некорректно ввели данные: отловим в network ошибку и покажем юзеру
                 // .unwrap() - чтобы в тулките отрабатывал кейс catch
                 .unwrap()
@@ -43,6 +44,10 @@ export const Login = () => {
                         fieldsErrors.forEach((fieldError) => {
                             // покажем ошибку чтобы она не глобально появлялась а под конкретной формой с ошибкой при логинизации
                             formikHelpers.setFieldError(fieldError.field, fieldError.error)
+
+                /*            // чтобы обработать ошибку не только в емайле а в обоих полях - используют когда огромные формы в проектах
+                            // тоесть пришел массив из 2 ошибок - пробегаемся по массиву и покажем ошибки
+                            reason.fieldsErrors.forEach(fieldError => formikHelpers.setFieldError(fieldError.field, fieldError.error))       */
                         })
                     }
                 })

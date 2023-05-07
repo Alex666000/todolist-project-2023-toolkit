@@ -18,6 +18,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>
         } else {
             const isShowAppError = !res.data.fieldsErrors.length
             handleServerAppError(res.data, dispatch, isShowAppError)
+            // ошибку с сервера отправим в форму в catch в Login
             return rejectWithValue(res.data)
         }
     } catch (e) {
