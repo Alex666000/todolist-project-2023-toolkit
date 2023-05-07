@@ -61,8 +61,8 @@ const updateTask = createAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
         const task = state.tasks[arg.todolistId].find((t: { id: string; }) => t.id === arg.taskId);
         if (!task) {
             //throw new Error("task not found in the state");
-            console.warn("task not found in the state");
-            // todo: заменить возврат.....................................................
+            // console.warn("task not found in the state");
+            dispatch(appActions.setAppError({error: 'Some error!!!'}))
             return rejectWithValue(null);
         }
 
@@ -78,7 +78,7 @@ const updateTask = createAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
 
         const res = await todolistsAPI.updateTask(arg.todolistId, arg.taskId, apiModel);
         if (res.data.resultCode === 0) {
-            /*что приходит то и возвращается поэтому пишем arg - тоже самое что и аргументы = параметры*/
+            /* что приходит то и возвращается поэтому пишем arg - тоже самое что и аргументы = параметры */
             // return {taskId: arg.taskId, model: arg.domainModel, todolistId: arg.todolistId};
             // убираем лоадер...
             dispatch(appActions.setAppStatus({status: 'succeeded'}))
