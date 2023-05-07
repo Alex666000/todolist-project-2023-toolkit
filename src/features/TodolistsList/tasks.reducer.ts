@@ -1,4 +1,5 @@
 import {
+    ResultCode,
     TaskPriorities,
     TaskStatuses,
     TaskType,
@@ -77,7 +78,7 @@ const updateTask = createAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
         };
 
         const res = await todolistsAPI.updateTask(arg.todolistId, arg.taskId, apiModel);
-        if (res.data.resultCode === 0) {
+        if (res.data.resultCode === ResultCode.Success) {
             /* что приходит то и возвращается поэтому пишем arg - тоже самое что и аргументы = параметры */
             // return {taskId: arg.taskId, model: arg.domainModel, todolistId: arg.todolistId};
             // убираем лоадер...

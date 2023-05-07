@@ -125,20 +125,6 @@ test("correct task should be added to correct array", () => {
     expect(endState["todolistId2"][0].title).toBe("juce");
     expect(endState["todolistId2"][0].status).toBe(TaskStatuses.New);
 });
-// startState = {
-//     "todolistId1": [
-//         {
-//             id: "1",
-//             title: "CSS",
-//             status: TaskStatuses.New,
-//             todoListId: "todolistId1",
-//             description: "",
-//             startDate: "",
-//             deadline: "",
-//             addedDate: "",
-//             order: 0,
-//             priority: TaskPriorities.Low
-//         },
 test("status of specified task should be changed", () => {
     const args = {taskId: "2", domainModel: {status: TaskStatuses.New}, todolistId: "todolistId2"};
 

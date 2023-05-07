@@ -104,6 +104,12 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
+// объект а не enum(тк она самовызывающаяся функция) - не использовать enum -- только объект
+// - но к объекту приписываем чтобработало as const
+export const ResultCode = {
+    Success: 0,
+    Error: 1,
+} as const
 
 export type TaskType = {
     description: string
