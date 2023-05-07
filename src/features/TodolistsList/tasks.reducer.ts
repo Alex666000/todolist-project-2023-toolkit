@@ -80,6 +80,8 @@ const updateTask = createAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>
         if (res.data.resultCode === 0) {
             /*что приходит то и возвращается поэтому пишем arg - тоже самое что и аргументы = параметры*/
             // return {taskId: arg.taskId, model: arg.domainModel, todolistId: arg.todolistId};
+            // убираем лоадер...
+            dispatch(appActions.setAppStatus({status: 'succeeded'}))
             return arg;
         } else {
             handleServerAppError(res.data, dispatch);
