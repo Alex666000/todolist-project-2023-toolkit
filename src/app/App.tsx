@@ -26,6 +26,7 @@ function App() {
 	const isInitialized = useSelector(selectIsInitialized)
 	const isLoggedIn = useSelector(selectIsLoggedIn)
 
+	// в useActions закидываем экшены которые нужны в компоненте
 	const {initializeApp, logout} = useActions(authThunks)
 
 	useEffect(() => {
