@@ -1,5 +1,2 @@
-// экспортируем все типы из:
-export * from './common.types'
-// или:
+export * from "./common.types"
 // export type {ResponseType} from './common.types'
-// export type {FieldErrorType} from './common.types'
