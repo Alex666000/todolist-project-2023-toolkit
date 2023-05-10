@@ -35,7 +35,8 @@ export const TodolistsList = () => {
 
 
     const addTodolistCallback = useCallback((title: string) => {
-        addTodolist(title)
+        // только для тулкита и в санках нового синтаксиса .unwrap() - нужен для того чобы попадать в catch()
+        return addTodolist(title).unwrap()
     }, [])
 
     if (!isLoggedIn) {

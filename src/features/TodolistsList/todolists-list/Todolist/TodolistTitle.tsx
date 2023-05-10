@@ -9,7 +9,7 @@ type Props = {
     todolist: TodolistDomainType
 }
 
-const TodolistTitle:FC<Props> = ({todolist}) => {
+const TodolistTitle: FC<Props> = ({todolist}) => {
     const {removeTodolist, changeTodolistTitle} = useActions(todolistsThunks)
 
     const removeTodolistHandler = () => removeTodolist(todolist.id)

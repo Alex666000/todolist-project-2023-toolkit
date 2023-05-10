@@ -15,3 +15,7 @@ export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatc
         dispatch(appActions.setAppError({error: data.messages.length ? data.messages[0] : 'Some error occurred'}))
     }
 }
+/*
+отключаем глобальную ошибку снизу экрана -- делаем false -- showError -- и ошибка покажется снизу конкретного поля
+
+ */
