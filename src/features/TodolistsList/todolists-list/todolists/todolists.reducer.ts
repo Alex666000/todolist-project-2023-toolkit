@@ -4,23 +4,16 @@ import {todolistsApi, TodolistType, UpdateTodolistTitleArgType} from 'features/T
 import {createAppAsyncThunk, handleServerAppError, handleServerNetworkError} from 'common/utils';
 import {ResultCode} from 'common/enums';
 import {clearTasksAndTodolists} from 'common/actions';
-import {thunkTryCatch} from 'common/utils/thunk-try-catch';
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>
-('todo/fetchTodolists', async (_, thunkAPI) => {
-    const {dispatch, rejectWithValue} = thunkAPI
-    try {
-        dispatch(appActions.setAppStatus({status: 'loading'}))
-        const res = await todolistsApi.getTodolists()
-        dispatch(appActions.setAppStatus({status: 'succeeded'}))
-        return {todolists: res.data}
-    } catch (e) {
-        handleServerNetworkError(e, dispatch)
-        return rejectWithValue(null)
-    }
+('todo/fetchTodolists', async () => {
+    // стал такой короткий код благодаря addMatcher()
+    const res = await todolistsApi.getTodolists()
+    return {todolists: res.data}
+
 })
 
-const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>
+/*const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>
 ('todo/addTodolist', async (title, thunkAPI) => {
     const {dispatch, rejectWithValue} = thunkAPI
     return thunkTryCatch(thunkAPI, async () => {
@@ -33,6 +26,18 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>
             return rejectWithValue(res.data)
         }
     })
+})*/
+
+const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>
+('todo/addTodolist', async (title, {rejectWithValue}) => {
+    const res = await todolistsApi.createTodolist(title)
+    if (res.data.resultCode === ResultCode.Success) {
+        return {todolist: res.data.data.item}
+    } else {
+        // оставляем rejectWithValue так как передавать будем конкретнуюошибку
+        debugger
+        return rejectWithValue(res.data)
+    }
 })
 
 const removeTodolist = createAppAsyncThunk<{ id: string }, string>

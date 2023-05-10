@@ -17,11 +17,6 @@ export const TodolistsList = () => {
 
     const {addTodolist, fetchTodolists} = useActions(todolistsThunks)
 
-
-    const {
-        changeTodolistFilter
-    } = useActions({...todolistsActions})
-
     // const {addTask: addTaskThunk, removeTask: removeTaskThunk, updateTask} = useActions(tasksThunks)
     // const {changeTodolistFilter} = useActions(todolistsActions)
 
