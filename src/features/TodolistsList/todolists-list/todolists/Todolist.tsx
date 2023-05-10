@@ -4,7 +4,6 @@ import {IconButton} from '@mui/material'
 import {Task} from 'features/TodolistsList/todolists-list/todolists/Task/Task'
 import {TodolistDomainType, todolistsThunks} from 'features/TodolistsList/todolists-list/todolists/todolists.reducer'
 import {tasksThunks} from 'features/TodolistsList/todolists-list/tasks/tasks.reducer';
-import {TaskStatuses} from 'common/enums';
 import {useActions} from 'common/hooks';
 import {AddItemForm, EditableSpan} from 'common/components'
 import {TaskType} from "features/TodolistsList/todolists-list/tasks/tasks-api";
@@ -33,15 +32,6 @@ export const Todolist: FC<Props> = memo(function ({todolist, tasks}) {
         changeTodolistTitle({title, id: todolist.id})
     }
 
-    let tasksForTodolist = tasks
-
-    if (todolist.filter === 'active') {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.New)
-    }
-    if (todolist.filter === 'completed') {
-        tasksForTodolist = tasks.filter(t => t.status === TaskStatuses.Completed)
-    }
-
     return <div>
         <h3><EditableSpan value={todolist.title} onChange={changeTodolistTitleHandler}/>
             <IconButton onClick={removeTodolistHandler} disabled={todolist.entityStatus === 'loading'}>
@@ -49,11 +39,9 @@ export const Todolist: FC<Props> = memo(function ({todolist, tasks}) {
             </IconButton>
         </h3>
         <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'}/>
-        <div>
-            {tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id}/>)}
-        </div>
+        <Task task={} todolistId={}/>
         <div style={{paddingTop: '10px'}}>
-           <FilterTasksButtons todolist={todolist}/>
+            <FilterTasksButtons todolist={todolist}/>
         </div>
     </div>
 })
