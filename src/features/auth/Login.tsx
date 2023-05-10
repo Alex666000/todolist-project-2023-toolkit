@@ -3,11 +3,13 @@ import {FormikHelpers, useFormik} from 'formik'
 import {useSelector} from 'react-redux'
 import {Navigate} from 'react-router-dom'
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from '@mui/material'
-import {useActions, useAppDispatch} from 'common/hooks';
+import {useActions} from 'common/hooks';
 import {selectIsLoggedIn} from 'features/auth/auth.selectors';
 import {authThunks} from './auth.reducer';
 import {LoginParamsType} from 'features/auth/auth.api';
 import {ResponseType} from 'common/types';
+
+type FormikErrorType = Partial<Omit<LoginParamsType, 'captcha'>>
 
 export const Login = () => {
     // const dispatch = useAppDispatch()
@@ -17,6 +19,9 @@ export const Login = () => {
 
     const formik = useFormik({
         validate: (values) => {
+            // Partial - сделать все свойства не обязательными
+            // и убрать каптчу Омит
+            const errors: FormikErrorType = {}
             if (!values.email) {
                 return {
                     email: 'Email is required'

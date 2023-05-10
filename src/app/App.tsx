@@ -1,15 +1,7 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import {
-	AppBar,
-	Button,
-	CircularProgress,
-	Container,
-	IconButton,
-	LinearProgress,
-	Toolbar,
-	Typography
+import {AppBar, Button, CircularProgress, Container, IconButton, LinearProgress, Toolbar, Typography
 } from '@mui/material';
 import { Menu } from '@mui/icons-material'
 import { Login } from 'features/auth/Login'
@@ -29,11 +21,11 @@ function App() {
 	const {initializeApp, logout} = useActions(authThunks)
 
 	useEffect(() => {
-		initializeApp()
+		initializeApp({})
 	}, [])
 
 
-	const logoutHandler = () => logout()
+	const logoutHandler = () => logout({})
 
 
 	if (!isInitialized) {
