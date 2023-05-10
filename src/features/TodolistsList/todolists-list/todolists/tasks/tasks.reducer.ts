@@ -5,7 +5,7 @@ import {createAppAsyncThunk, handleServerAppError, handleServerNetworkError} fro
 import {ResultCode, TaskPriorities, TaskStatuses} from 'common/enums';
 import {clearTasksAndTodolists} from 'common/actions';
 import {thunkTryCatch} from 'common/utils/thunk-try-catch';
-import {AddTaskArgType, RemoveTaskArgType, tasksApi, TaskType, UpdateTaskArgType, UpdateTaskModelType} from "features/TodolistsList/todolists-list/tasks/tasks-api";
+import {AddTaskArgType, RemoveTaskArgType, tasksApi, TaskType, UpdateTaskArgType, UpdateTaskModelType} from "features/TodolistsList/todolists-list/todolists/tasks/tasks-api";
 
 const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[], todolistId: string }, string>
 ('tasks/fetchTasks', async (todolistId, thunkAPI) => {

@@ -7,7 +7,7 @@ import {Todolist} from 'features/TodolistsList/todolists-list/todolists/Todolist
 import {Navigate} from 'react-router-dom'
 import {useActions} from 'common/hooks';
 import {selectIsLoggedIn} from 'features/auth/auth.selectors';
-import {selectTasks} from 'features/TodolistsList/todolists-list/tasks/tasks.selectors';
+import {selectTasks} from 'features/TodolistsList/todolists-list/todolists/tasks/tasks.selectors';
 import {selectTodolists} from 'features/TodolistsList/todolists-list/todolists/todolists.selectors';
 
 export const TodolistsList = () => {

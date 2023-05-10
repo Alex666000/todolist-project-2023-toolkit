@@ -4,7 +4,7 @@ import {
 	todolistsReducer,
 	todolistsThunks
 } from 'features/TodolistsList/todolists-list/todolists/todolists.reducer'
-import { tasksReducer, TasksStateType } from 'features/TodolistsList/todolists-list/tasks/tasks.reducer'
+import { tasksReducer, TasksStateType } from 'features/TodolistsList/todolists-list/todolists/tasks/tasks.reducer'
 import { TodolistType } from 'features/TodolistsList/todolists.api';
 
 

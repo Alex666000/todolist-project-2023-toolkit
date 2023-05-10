@@ -3,10 +3,10 @@ import {Checkbox, IconButton} from '@mui/material';
 import {Delete} from '@mui/icons-material';
 import {EditableSpan} from 'common/components';
 import {TaskStatuses} from 'common/enums';
-import {TaskType} from "features/TodolistsList/todolists-list/tasks/tasks-api";
+import {TaskType} from "features/TodolistsList/todolists-list/todolists/tasks/tasks-api";
 import {useActions} from "common/hooks";
-import {tasksThunks} from "features/TodolistsList/todolists-list/tasks/tasks.reducer";
-import s from "./styles.module.css";
+import {tasksThunks} from "features/TodolistsList/todolists-list/todolists/tasks/tasks.reducer";
+import s from "features/TodolistsList/todolists-list/todolists/tasks/Task/styles.module.css";
 
 type Props = {
     task: TaskType;
