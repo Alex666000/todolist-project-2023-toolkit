@@ -3,14 +3,15 @@ import {FormikHelpers, useFormik} from 'formik'
 import {useSelector} from 'react-redux'
 import {Navigate} from 'react-router-dom'
 import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from '@mui/material'
-import {useAppDispatch} from 'common/hooks';
+import {useActions, useAppDispatch} from 'common/hooks';
 import {selectIsLoggedIn} from 'features/auth/auth.selectors';
 import {authThunks} from './auth.reducer';
 import {LoginParamsType} from 'features/auth/auth.api';
 import {ResponseType} from 'common/types';
 
 export const Login = () => {
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
+    const {login} = useActions(authThunks)
 
     const isLoggedIn = useSelector(selectIsLoggedIn)
 
@@ -33,7 +34,8 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: (values, formikHelpers: FormikHelpers<LoginParamsType>) => {
-            dispatch(authThunks.login(values))
+            // dispatch(authThunks.login(values))
+            const res = login(values)
                 .unwrap()
                 .catch((reason: ResponseType) => {
                     const {fieldsErrors} = reason
