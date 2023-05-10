@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {IconButton, TextField} from '@mui/material';
 import {AddBox} from '@mui/icons-material';
 import {ResponseType} from "common/types";
+import {RejectValueType} from "common/utils/create-app-async-thunk";
 
 type Props = {
     addItem: (title: string) => Promise<any>
@@ -16,15 +17,14 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Pro
         if (title.trim() !== '') {
             addItem(title)
                 .then(() => {
-                    debugger
-                    setTitle('')
+                    setTitle('');
                 })
-                .catch((res: ResponseType) => {
-                    debugger
-                    // setError('Error ❌')
-                    setError(res.messages[0])
+                .catch((err: RejectValueType) => {
+                    if (err.data) {
+                        const messages = err.data.messages
+                        setError(messages.length ? messages[0] : 'Some error occurred')
+                    }
                 })
-            setTitle('');
         } else {
             setError('Title is required');
         }

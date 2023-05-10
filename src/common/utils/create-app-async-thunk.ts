@@ -8,9 +8,21 @@ import {ResponseType} from 'common/types';
 просто сделали обертку и добавили тиы к стандартной санке createAppAsyncThunk: ее теперь импользуем вместо старой санки но с таким же названием
 
 - СДЕЛАЛИ ЧТОБЫ УБРАТЬ ТРЕТИЙ ПАРАМЕТР В ТИПИЗАЦИИ САНКИ
+
  */
+// export const createAppAsyncThunk = createAsyncThunk.withTypes<{
+//     state: AppRootStateType
+//     dispatch: AppDispatch
+//     rejectValue: null | ResponseType
+// }>()
+
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{
     state: AppRootStateType
     dispatch: AppDispatch
-    rejectValue: null | ResponseType
+    rejectValue: null | RejectValueType
 }>()
+
+export type RejectValueType = {
+    data: ResponseType
+    showGlobalError: boolean
+}

@@ -27,52 +27,33 @@ const slice = createSlice({
     },
     extraReducers: builder => {
         builder
-            // принимает 2 функции: 1) совпадения === функция-предикат (сравнения, если она вернет true мы попадем во 2 функцию и будем изменять логику в стейте) - возвращающую булево значение
-            // 2) наш редюсер
-            // любой экшн который мы диспатичм не важно в каком он редюсере мы всегда попадем в матчер
-            // все экшены прогоняются через addMatcher()
             .addMatcher(
-                (action) => {
-                    console.log('addMatcher action', action)
-                    // return true
-                    return action.type.endsWith(('/pending'))
-                },
-                (state, action) => {
-                    // console.log('addMatcher reducer')
+                action => action.type.endsWith('/pending'),
+                state => {
                     state.status = 'loading'
-                },
+                }
             )
-            // обработка ошибок:
             .addMatcher(
-                (action) => {
-                    console.log('addMatcher action', action)
-                    return action.type.endsWith(('/rejected'))
-                },
+                action => action.type.endsWith('/rejected'),
                 (state, action) => {
-                    debugger
-                    // если есть payload то достаем ошибку так
-                    if (action.payload) {
-                        state.error = action.payload.messages[0]
-                    }
-                    // если payload нет то достаем ошибку так:
-                    if (!action.payload) {
-                        state.error = action.error.message
+                    const {payload, error} = action
+                    if (payload) {
+                        // проверяем на глобальную ошибку
+                        if (payload.showGlobalError) {
+                            state.error = payload.data.messages.length ? payload.data.messages[0] : 'Some error occurred'
+                        }
+                    } else {
+                        state.error = error.message ? error.message : 'Some error occurred'
                     }
                     state.status = 'failed'
-                },
+                }
             )
-            // успешный кейс
             .addMatcher(
-                (action) => {
-                    // console.log('addMatcher action', action)
-                    return action.type.endsWith(('/fulfilled'))
-                },
-                (state, action) => {
-                    // убираем крутилку
+                action => action.type.endsWith('/fulfilled'),
+                state => {
                     state.status = 'succeeded'
-                },
+                }
             )
-
     }
 })
 
