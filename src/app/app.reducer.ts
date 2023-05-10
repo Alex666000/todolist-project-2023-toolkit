@@ -51,9 +51,13 @@ const slice = createSlice({
                 (state, action) => {
                     debugger
                     // если есть payload то достаем ошибку так
-                    state.error = action.payload.messages[0]
+                    if (action.payload) {
+                        state.error = action.payload.messages[0]
+                    }
                     // если payload нет то достаем ошибку так:
-                    state.error = action.error.message
+                    if (!action.payload) {
+                        state.error = action.error.message
+                    }
                     state.status = 'failed'
                 },
             )
