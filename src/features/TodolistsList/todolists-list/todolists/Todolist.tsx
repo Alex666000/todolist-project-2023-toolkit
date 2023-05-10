@@ -1,17 +1,14 @@
-import React, {FC, memo, useCallback, useEffect} from 'react'
+import React, {FC, memo, useEffect} from 'react'
 import {Delete} from '@mui/icons-material'
-import {Button, IconButton} from '@mui/material'
+import {IconButton} from '@mui/material'
 import {Task} from 'features/TodolistsList/todolists-list/todolists/Task/Task'
-import {
-    TodolistDomainType,
-    todolistsActions,
-    todolistsThunks
-} from 'features/TodolistsList/todolists-list/todolists/todolists.reducer'
+import {TodolistDomainType, todolistsThunks} from 'features/TodolistsList/todolists-list/todolists/todolists.reducer'
 import {tasksThunks} from 'features/TodolistsList/todolists-list/tasks/tasks.reducer';
 import {TaskStatuses} from 'common/enums';
 import {useActions} from 'common/hooks';
 import {AddItemForm, EditableSpan} from 'common/components'
 import {TaskType} from "features/TodolistsList/todolists-list/tasks/tasks-api";
+import {FilterTasksButtons} from "features/TodolistsList/todolists-list/Todolist/FilterTasksButtons";
 
 type Props = {
     todolist: TodolistDomainType
@@ -19,11 +16,8 @@ type Props = {
 }
 
 export const Todolist: FC<Props> = memo(function ({todolist, tasks}) {
-
     const {fetchTasks, addTask,} = useActions(tasksThunks)
     const {removeTodolist, changeTodolistTitle} = useActions(todolistsThunks)
-    const {changeTodolistFilter} = useActions(todolistsActions)
-
 
     useEffect(() => {
         fetchTasks(todolist.id)
@@ -38,19 +32,6 @@ export const Todolist: FC<Props> = memo(function ({todolist, tasks}) {
     const changeTodolistTitleHandler = (title: string) => {
         changeTodolistTitle({title, id: todolist.id})
     }
-
-    const onAllClickHandler = useCallback(() => changeTodolistFilter({
-        id: todolist.id,
-        filter: "all"
-    }), [todolist.id])
-    const onActiveClickHandler = useCallback(() => changeTodolistFilter({
-        id: todolist.id,
-        filter: "active"
-    }), [todolist.id])
-    const onCompletedClickHandler = useCallback(() => changeTodolistFilter({
-        id: todolist.id,
-        filter: "completed"
-    }), [todolist.id])
 
     let tasksForTodolist = tasks
 
@@ -69,24 +50,10 @@ export const Todolist: FC<Props> = memo(function ({todolist, tasks}) {
         </h3>
         <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === 'loading'}/>
         <div>
-            {
-                tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id}/>)
-            }
+            {tasksForTodolist.map(t => <Task key={t.id} task={t} todolistId={todolist.id}/>)}
         </div>
         <div style={{paddingTop: '10px'}}>
-            <Button variant={todolist.filter === 'all' ? 'outlined' : 'text'}
-                    onClick={onAllClickHandler}
-                    color={'inherit'}
-            >All
-            </Button>
-            <Button variant={todolist.filter === 'active' ? 'outlined' : 'text'}
-                    onClick={onActiveClickHandler}
-                    color={'primary'}>Active
-            </Button>
-            <Button variant={todolist.filter === 'completed' ? 'outlined' : 'text'}
-                    onClick={onCompletedClickHandler}
-                    color={'secondary'}>Completed
-            </Button>
+           <FilterTasksButtons todolist={todolist}/>
         </div>
     </div>
 })
