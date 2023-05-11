@@ -19,7 +19,7 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
     } else {
       return rejectWithValue({ data: res.data, showGlobalError: false })
     }
-  }
+  },
 )
 
 const removeTodolist = createAppAsyncThunk<{ id: string }, string>(
@@ -29,7 +29,7 @@ const removeTodolist = createAppAsyncThunk<{ id: string }, string>(
       todolistsActions.changeTodolistEntityStatus({
         id,
         entityStatus: "loading",
-      })
+      }),
     )
     const res = await todolistsApi.deleteTodolist(id)
     if (res.data.resultCode === ResultCode.Success) {
@@ -37,7 +37,7 @@ const removeTodolist = createAppAsyncThunk<{ id: string }, string>(
     } else {
       return rejectWithValue({ data: res.data, showGlobalError: true })
     }
-  }
+  },
 )
 
 const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, UpdateTodolistTitleArgType>(
@@ -49,7 +49,7 @@ const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, Upda
     } else {
       return rejectWithValue({ data: res.data, showGlobalError: true })
     }
-  }
+  },
 )
 
 const initialState: TodolistDomainType[] = []
@@ -106,12 +106,7 @@ const slice = createSlice({
 
 export const todolistsReducer = slice.reducer
 export const todolistsActions = slice.actions
-export const todolistsThunks = {
-  fetchTodolists,
-  addTodolist,
-  removeTodolist,
-  changeTodolistTitle,
-}
+export const todolistsThunks = { fetchTodolists, addTodolist, removeTodolist, changeTodolistTitle }
 
 // types
 export type FilterValuesType = "all" | "active" | "completed"
