@@ -11,7 +11,7 @@ type Classes = ReturnType<typeof useStyles>;
 const useStyles = makeStyles({
     noTasks: {
         padding: "10px",
-        color: "grey",
+        color: "#3363dd",
         opacity: 0.7,
         fontSize: "14px",
         position: 'relative',

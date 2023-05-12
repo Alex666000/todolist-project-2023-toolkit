@@ -1,4 +1,4 @@
-import React, {FC, memo, ReactNode, useEffect} from "react"
+import React, {FC, memo, useEffect} from "react"
 import {
     FilterValuesType,
     TodolistDomainType,
@@ -10,8 +10,7 @@ import {AddItemForm} from "common/components"
 import {TaskType} from "features/todolists-list/tasks/tasks.api"
 import {Tasks} from "features/todolists-list/todolists/Todolist/Tasks/Tasks"
 import {TodolistTitle} from "features/todolists-list/todolists/Todolist/TodolistTitle/TodolistTitle"
-import {Button, ButtonClasses, Paper} from "@mui/material";
-import {FilterButton} from "features/todolists-list/todolists/Todolist/FilterButton/FilterButton";
+import {Button, Paper} from "@mui/material";
 import {OverridableStringUnion} from "@mui/types";
 
 type Props = {
@@ -42,15 +41,14 @@ export const Todolist: FC<Props> = memo((props) => {
         buttonFilter: FilterValuesType,
         color: OverridableStringUnion<'inherit' | 'primary' | 'secondary'>,
         text: string) => {
-
         return (
-        <Button
-            variant={props.todolist.filter === buttonFilter ? "outlined" : "text"}
-            onClick={onClick}
-            color={color}
-        >
-            {text}
-        </Button>
+            <Button
+                variant={props.todolist.filter === buttonFilter ? "outlined" : "text"}
+                onClick={onClick}
+                color={color}
+            >
+                {text}
+            </Button>
         )
     }
 
