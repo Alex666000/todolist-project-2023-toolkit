@@ -14,17 +14,21 @@ export const AddItemForm = React.memo(function ({addItem, disabled = false}: Pro
 
     const addItemHandler = () => {
         if (title.trim() !== "") {
+
             addItem(title)
                 .then(() => {
                     setTitle("")
                 })
                 .catch((err: RejectValueType) => {
+
                     if (err.data) {
+
                         const messages = err.data.messages
                         setError(messages.length ? messages[0] : "Some error occurred")
                     }
                 })
         } else {
+
             setError("Title is required")
         }
     }

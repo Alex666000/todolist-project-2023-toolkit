@@ -25,11 +25,14 @@ const fetchTasks = createAppAsyncThunk<{ tasks: TaskType[]; todolistId: string }
 const addTask = createAppAsyncThunk<{ task: TaskType }, AddTaskArgType>(
   "tasks/addTask",
   async (arg, { rejectWithValue }) => {
+      
     const res = await tasksApi.createTask(arg)
     if (res.data.resultCode === ResultCode.Success) {
+        
       const task = res.data.data.item
       return { task }
     } else {
+        
       return rejectWithValue({ data: res.data, showGlobalError: false })
     }
   }
