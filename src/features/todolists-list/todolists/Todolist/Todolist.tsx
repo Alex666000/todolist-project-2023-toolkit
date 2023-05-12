@@ -1,37 +1,56 @@
-import React, { FC, memo, useEffect } from "react"
-import { TodolistDomainType } from "features/todolists-list/todolists/todolists.reducer"
-import { tasksThunks } from "features/todolists-list/tasks/tasks.reducer"
-import { useActions } from "common/hooks"
-import { AddItemForm } from "common/components"
-import { TaskType } from "features/todolists-list/tasks/tasks.api"
-import { FilterTasksButtons } from "features/todolists-list/todolists/Todolist/FilterTasksButtons/FilterTasksButtons"
-import { Tasks } from "features/todolists-list/todolists/Todolist/Tasks/Tasks"
-import { TodolistTitle } from "features/todolists-list/todolists/Todolist/TodolistTitle/TodolistTitle"
-import {Paper} from "@mui/material";
+import React, {FC, memo, useEffect} from "react"
+import {
+    FilterValuesType,
+    TodolistDomainType,
+    todolistsActions
+} from "features/todolists-list/todolists/todolists.reducer"
+import {tasksThunks} from "features/todolists-list/tasks/tasks.reducer"
+import {useActions} from "common/hooks"
+import {AddItemForm} from "common/components"
+import {TaskType} from "features/todolists-list/tasks/tasks.api"
+import {Tasks} from "features/todolists-list/todolists/Todolist/Tasks/Tasks"
+import {TodolistTitle} from "features/todolists-list/todolists/Todolist/TodolistTitle/TodolistTitle"
+import {Button, Paper} from "@mui/material";
+import {FilterButton} from "features/todolists-list/todolists/Todolist/FilterButton/FilterButton";
 
 type Props = {
     todolist: TodolistDomainType
     tasks: TaskType[]
 }
-export const Todolist: FC<Props> = memo(({ todolist, tasks }) => {
-    const { fetchTasks, addTask } = useActions(tasksThunks)
+export const Todolist: FC<Props> = memo((props) => {
+    const {changeTodolistFilter} = useActions(todolistsActions)
+
+    const {fetchTasks, addTask} = useActions(tasksThunks)
 
     useEffect(() => {
-        fetchTasks(todolist.id)
+        fetchTasks(props.todolist.id)
     }, [])
 
     const addTaskCallback = (title: string) => {
         // .unwrap() -- чтобы не зачищалось поле когда ввели ошибку
-        return addTask({ title, todolistId: todolist.id }).unwrap()
+        return addTask({title, todolistId: props.todolist.id}).unwrap()
+    }
+
+    const onAllClickHandler = (filter: FilterValuesType) => {
+        changeTodolistFilter({filter, id: props.todolist.id})
     }
 
     return (
-        <Paper style={{padding: "10px"}} >
-            <TodolistTitle todolist={todolist} />
-            <AddItemForm addItem={addTaskCallback} disabled={todolist.entityStatus === "loading"} />
-            <Tasks todolist={todolist} tasks={tasks} />
-            <div style={{ paddingTop: "10px" }}>
-                <FilterTasksButtons todolist={todolist} />
+        <Paper style={{padding: "10px"}}>
+            <TodolistTitle todolist={props.todolist}/>
+            <AddItemForm addItem={addTaskCallback} disabled={props.todolist.entityStatus === "loading"}/>
+            <Tasks todolist={props.todolist} tasks={props.tasks}/>
+            <div style={{paddingTop: "10px"}}>
+                <FilterButton onClick={() => onAllClickHandler('all')} selectedFilter={props.todolist.filter} buttonFilter={"all" } color={"inherit"}>
+                    All
+                </FilterButton>
+                <FilterButton onClick={() => onAllClickHandler('active')} selectedFilter={props.todolist.filter} buttonFilter={"active" } color={"primary"}>
+                    Active
+                </FilterButton>
+                <FilterButton onClick={() => onAllClickHandler('completed')} selectedFilter={props.todolist.filter} buttonFilter={"completed" } color={"secondary"}>
+                    Completed
+                </FilterButton>
+
             </div>
         </Paper>
     )
