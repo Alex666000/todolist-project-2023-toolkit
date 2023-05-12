@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect} from "react"
+import React, {FC, memo, ReactNode, useEffect} from "react"
 import {
     FilterValuesType,
     TodolistDomainType,
@@ -10,8 +10,9 @@ import {AddItemForm} from "common/components"
 import {TaskType} from "features/todolists-list/tasks/tasks.api"
 import {Tasks} from "features/todolists-list/todolists/Todolist/Tasks/Tasks"
 import {TodolistTitle} from "features/todolists-list/todolists/Todolist/TodolistTitle/TodolistTitle"
-import {Button, Paper} from "@mui/material";
+import {Button, ButtonClasses, Paper} from "@mui/material";
 import {FilterButton} from "features/todolists-list/todolists/Todolist/FilterButton/FilterButton";
+import {OverridableStringUnion} from "@mui/types";
 
 type Props = {
     todolist: TodolistDomainType
@@ -35,22 +36,33 @@ export const Todolist: FC<Props> = memo((props) => {
         changeTodolistFilter({filter, id: props.todolist.id})
     }
 
+    // renderFunction
+    const renderFilterButton = (
+        onClick: () => void,
+        buttonFilter: FilterValuesType,
+        color: OverridableStringUnion<'inherit' | 'primary' | 'secondary'>,
+        text: string) => {
+
+        return (
+        <Button
+            variant={props.todolist.filter === buttonFilter ? "outlined" : "text"}
+            onClick={onClick}
+            color={color}
+        >
+            {text}
+        </Button>
+        )
+    }
+
     return (
         <Paper style={{padding: "10px"}}>
             <TodolistTitle todolist={props.todolist}/>
             <AddItemForm addItem={addTaskCallback} disabled={props.todolist.entityStatus === "loading"}/>
             <Tasks todolist={props.todolist} tasks={props.tasks}/>
             <div style={{paddingTop: "10px"}}>
-                <FilterButton onClick={() => onAllClickHandler('all')} selectedFilter={props.todolist.filter} buttonFilter={"all" } color={"inherit"}>
-                    All
-                </FilterButton>
-                <FilterButton onClick={() => onAllClickHandler('active')} selectedFilter={props.todolist.filter} buttonFilter={"active" } color={"primary"}>
-                    Active
-                </FilterButton>
-                <FilterButton onClick={() => onAllClickHandler('completed')} selectedFilter={props.todolist.filter} buttonFilter={"completed" } color={"secondary"}>
-                    Completed
-                </FilterButton>
-
+                {renderFilterButton(() => onAllClickHandler("all"), 'all', 'inherit', 'All')}
+                {renderFilterButton(() => onAllClickHandler("active"), 'active', 'primary', 'Active')}
+                {renderFilterButton(() => onAllClickHandler("completed"), 'completed', 'secondary', 'Completed')}
             </div>
         </Paper>
     )
