@@ -21,11 +21,17 @@ export const TodolistTitle: FC<Props> = ({ todolist }) => {
   }
 
   return (
-    <h3>
-      <EditableSpan value={todolist.title} onChange={changeTodolistTitleHandler} />
-      <IconButton onClick={removeTodolistHandler} disabled={todolist.entityStatus === "loading"}>
-        <Delete />
+    <div style={{ position: "relative" }}>
+      <IconButton
+        style={{ position: "absolute", right: "5px", top: "-34px", padding: 0 }}
+        onClick={removeTodolistHandler}
+        disabled={todolist.entityStatus === "loading"}
+      >
+        <Delete fontSize={'small'}/>
       </IconButton>
-    </h3>
+      <h3>
+        <EditableSpan value={todolist.title} onChange={changeTodolistTitleHandler} />
+      </h3>
+    </div>
   )
 }

@@ -31,14 +31,13 @@ const slice = createSlice({
         },
         state => {
           state.status = "loading"
-        }
+        },
       )
       .addMatcher(
         action => {
           return action.type.endsWith("/rejected")
         },
         (state, action) => {
-          debugger
           const { payload, error } = action
           if (payload) {
             if (payload.showGlobalError) {
@@ -48,7 +47,7 @@ const slice = createSlice({
             state.error = error.message ? error.message : "Some error occurred"
           }
           state.status = "failed"
-        }
+        },
       )
       .addMatcher(
         action => {
@@ -56,7 +55,7 @@ const slice = createSlice({
         },
         state => {
           state.status = "succeeded"
-        }
+        },
       )
   },
 })
